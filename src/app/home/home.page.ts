@@ -23,7 +23,14 @@ export class HomePage {
       if(!this.squares[pos]){
         this.squares.splice(pos,1,'X')
         let rand = this.random[Math.floor(Math.random() * this.random.length)]
-        this.squares.splice(rand,1,'O')
+        if(this.squares[rand] == null ){
+          this.squares.splice(rand,1,'O')
+          this.random.splice(rand,1)
+        } else{
+          let found= this.squares.find(element => element == null)
+          rand= this.squares.indexOf(found)
+          this.squares[rand]='O'
+        }
       }
     }
   }
