@@ -1,6 +1,6 @@
 ion-content{
-    --ion-background-color: rgb(102,105,115);
-    --ion-background-color: linear-gradient(45deg, rgba(102,105,115,1) 7%, rgba(176,176,176,1) 60%, rgba(255,255,255,1) 100%); 
+    --ion-background-color: rgb(13,219,45);
+    --ion-background-color: linear-gradient(135deg, rgba(13,219,45,1) 14%, rgba(14,35,213,1) 77%, rgba(33,61,199,1) 100%); 
 }
 .container{
     width: 100%;
@@ -29,4 +29,12 @@ ion-content{
     justify-items: center;
     align-items: center;
     border: 1px solid black;
+}
+.ion-button{
+    cursor: pointer;
+}
+
+.ion-button:hover{
+    transition: 500ms;
+    height: 200%;
 }
