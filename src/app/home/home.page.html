@@ -6,9 +6,10 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div class="board">
-  <div class="square" *ngFor="let square of squares; let i = index" (click)="show(i)">
+<ion-content class="master">
+  <ion-button *ngIf="dificult == ''"  (click)="selectDificult()">Dificultad</ion-button>
+  <div  class="board" *ngIf="dificult != ''">
+  <div  class="square"  *ngFor="let square of squares; let i = index" (click)="show(i)">
     {{square}}
   </div>
   </div>

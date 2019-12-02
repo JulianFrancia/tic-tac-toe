@@ -1,3 +1,6 @@
+ion-content{
+    --ion-background-color: #00FFFF;
+}
 .board{
     display: grid;
     width: 75%;
@@ -17,4 +20,7 @@
     justify-items: center;
     align-items: center;
     border: 1px solid black;
+}
+.disableDiv{
+    pointer-events:none;
 }
