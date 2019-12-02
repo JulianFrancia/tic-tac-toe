@@ -1,10 +1,19 @@
 import { Component } from '@angular/core';
+import {trigger, style, animate, transition} from '@angular/animations';
 
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
+  animations: [
+    trigger('fade', [ 
+      transition('void => *', [
+        style({ opacity: 0 }), 
+        animate(2000, style({opacity: 1}))
+      ]) 
+    ])
+  ]
 })
 export class HomePage {
   public squares: string[];
@@ -24,20 +33,23 @@ export class HomePage {
   }
 
   show(pos){
-      if(!this.squares[pos]){
-        this.squares.splice(pos,1,'X');
-        let rand = this.random[Math.floor(Math.random() * this.random.length)]
-        if(this.squares[rand] == null ){
-          this.squares.splice(rand,1,'O')
-          this.random.splice(rand,1)
-        } else{
-          let found= this.squares.find(element => element == null)
-          rand= this.squares.indexOf(found)
-          this.squares[rand]='O'
+      if(!this.gameOver){
+        if(!this.squares[pos]){
+          this.squares.splice(pos,1,'X');
+          let rand = this.random[Math.floor(Math.random() * this.random.length)];
+          if(this.squares[rand] == null ){
+            this.squares.splice(rand,1,'O')
+            this.random.splice(rand,1)
+          } else{
+            let found= this.squares.find(element => element == null)
+            rand= this.squares.indexOf(found)
+            this.squares[rand]='O'
+          }
         }
+        this.checkWinner();  
       }
-      this.checkWinner();
   }
+
   checkWinner(){
     let winnerLines= [
       [0,1,2],
