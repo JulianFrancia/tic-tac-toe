@@ -7,11 +7,12 @@ ion-content{
     height: 100%;
     display: grid;
     align-items: center;
+    grid-template-rows: 1fr 1fr;
 }
 .board{
     display: grid;
     width: 75%;
-    height: 25%;
+    height: 62%;
     background: rgb(34,193,195);
     background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
     border:3px solid black;
@@ -20,6 +21,7 @@ ion-content{
     margin-right: auto;
     margin-left: auto;
     justify-self: center;
+    align-self: end;
 }
 
 .square{
