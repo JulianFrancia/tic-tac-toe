@@ -6,12 +6,13 @@
   <div class="container">
   <ion-button  class="ion-button" *ngIf="dificult == ''"  (click)="selectDificult('easy')">Facil</ion-button>
   <ion-button  class="ion-button" *ngIf="dificult == ''"  (click)="selectDificult('hard')">Dificil</ion-button>
+  <ion-button  class="ion-button" *ngIf="dificult == ''"  (click)="selectDificult('two')">2 jugadores</ion-button>
   <div  @fade  class="board" *ngIf="dificult != ''">
-  <div  class="square"  *ngFor="let square of squares; let i = index" (click)="move(i)">
+  <div class="square"  *ngFor="let square of squares; let i = index" (click)="move(i)" >
     {{square}}
   </div>
   </div>
   <p @fade style="align-self: baseline; justify-self: center; color: white;" *ngIf="gameOver">El ganador es:{{winner}}</p>
-  <ion-button @fade  class="ion-button" *ngIf="gameOver"  (click)="tryAgain()">Jugar de nuevo?</ion-button>
+  <ion-button @fade  class="ion-button" *ngIf="gameOver"  (click)="tryAgain()">Jugar de nuevo?</ion-button> 
 </div>
 </ion-content>

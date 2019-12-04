@@ -13,9 +13,12 @@ ion-content{
     display: grid;
     width: 75%;
     height: 62%;
+    background: #34495e;
+    /*
     background: rgb(34,193,195);
     background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
-    border:3px solid black;
+    */
+    border: 8px solid #2c3e50;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
     margin-right: auto;
@@ -30,8 +33,41 @@ ion-content{
     display: grid;
     justify-items: center;
     align-items: center;
-    border: 1px solid black;
+    border: 6px solid #2c3e50;
+    font-family: Helvetica;
+    font-weight: bold;
+    font-size: 2em;
+    
 }
+.square:focus{
+    animation-duration: 3s;
+    animation-name: colorin;
+}
+@keyframes colorin{
+    from{
+    background: green;
+    }
+    to{
+        background: red;
+    }
+}
+
 .ion-button{
     cursor: pointer;
+}
+
+@media (min-width: 1000px){
+    .board{
+        width: 39%;
+        height: 89%;
+    }
+}
+@media (min-width: 1400px){
+    .board{
+        width: 26%;
+        height: 90%;
+    }
+}
+.prueba{
+    background: red;
 }

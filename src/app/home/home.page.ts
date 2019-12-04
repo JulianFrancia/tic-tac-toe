@@ -23,6 +23,7 @@ export class HomePage {
   public turn: string;
   public winner: string;
   public winnerLines;
+  public cellColor: string;
 
   constructor() {
     this.initGame();
@@ -58,9 +59,9 @@ export class HomePage {
 
   changeTurn(){
     if(this.turn == 'player1'){
-      this.turn= 'player2'
+      this.turn= 'player2';
     } else{
-      this.turn= 'player1'
+      this.turn= 'player1';
     }
   }
 
@@ -84,19 +85,29 @@ export class HomePage {
           if(!this.squares[pos]){
             this.squares.splice(pos,1,'X');
             this.changeTurn();
-            this.checkWinner();  
+            this.checkWinner();
           }
-        } if(this.dificult=='easy'){
-            this.bot()
-        } else if(this.dificult == 'hard'){
-          this.tiebot()
+        }
+         if(this.dificult=='easy'){
+            this.bot();
+        } 
+        else if(this.dificult == 'hard'){
+          this.tiebot();
+        }
+         else if(this.dificult == 'two'){
+          if(!this.squares[pos]){
+            this.squares.splice(pos,1,'O')
+            this.changeTurn();
+            this.checkWinner();
+          }
         }
       }
   }
+
   tryAgain(){
     this.squares= Array(9).fill(null);
     this.gameOver= false;
-    this.turn = 'player1'
+    this.turn = 'player1';
   }
 
   checkWinner(){
@@ -104,11 +115,11 @@ export class HomePage {
       if(this.squares[line[0]] == this.squares[line[1]] && this.squares[line[1]] == this.squares[line[2]] && this.squares[line[0]] !== null){
         this.gameOver = true;
         this.winner = this.squares[line[0]];
+        break;
       } else{
         let found= this.squares.find(e => !e);
         let i= this.squares.indexOf(found);
         if(i == -1){
-          console.log('empate');
           this.winner= 'empate';
           this.gameOver= true;
           break;
@@ -153,26 +164,3 @@ export class HomePage {
     }
   }
 }
-/* 
-else if(this.turn == 'player2'){
-      if(!this.squares[pos]){
-        this.squares.splice(pos,1,'O')
-        this.turn= 'player1'
-      }
-    }
-*/
-
-/* 
-if(!this.squares[pos]){
-          this.squares.splice(pos,1,'X');
-          let rand = this.random[Math.floor(Math.random() * this.random.length)];
-          if(this.squares[rand] == null ){
-            this.squares.splice(rand,1,'O')
-            this.random.splice(rand,1)
-          } else{
-            let found= this.squares.find(element => element == null)
-            rand= this.squares.indexOf(found)
-            this.squares[rand]='O'
-          }
-        }
-*/
