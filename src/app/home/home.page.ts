@@ -22,13 +22,38 @@ export class HomePage {
   public gameOver: boolean;
   public turn: string;
   public winner: string;
+  public winnerLines;
 
   constructor() {
+    this.initGame();
+  }
+  initGame(){
+    this.winnerLines= [
+      [0,1,2],
+      [3,4,5],
+      [6,7,8],
+      [0,4,8],
+      [2,4,6],
+      [0,3,6],
+      [1,4,7],
+      [2,5,8]
+    ];
     this.squares= Array(9).fill(null);
     this.random=[0,1,2,3,4,5,6,7,8];
     this.dificult = '';
     this.gameOver= false;
     this.turn = 'player1';
+  }
+  randomCell(){
+    let rand = this.random[Math.floor(Math.random() * this.random.length)];
+        if(!this.squares[rand]){
+          this.squares.splice(rand,1,'O');
+          this.random.splice(rand,1);
+        } else{
+          let found= this.squares.find(element => element == null);
+          rand= this.squares.indexOf(found);
+          this.squares[rand]='O';
+        }
   }
 
   changeTurn(){
@@ -39,21 +64,14 @@ export class HomePage {
     }
   }
 
-  selectDificult(){
-    this.dificult= 'easy';
+  selectDificult(dificult){
+    this.dificult= dificult;
   }
+
   bot(){
     if(!this.gameOver){
       if(this.turn == 'player2'){
-        let rand = this.random[Math.floor(Math.random() * this.random.length)];
-        if(this.squares[rand] == null ){
-          this.squares.splice(rand,1,'O');
-          this.random.splice(rand,1);
-        } else{
-          let found= this.squares.find(element => element == null);
-          rand= this.squares.indexOf(found);
-          this.squares[rand]='O';
-        }
+        this.randomCell();
         this.changeTurn();
         this.checkWinner();
       }
@@ -68,7 +86,11 @@ export class HomePage {
             this.changeTurn();
             this.checkWinner();  
           }
-        } this.bot2();
+        } if(this.dificult=='easy'){
+            this.bot()
+        } else if(this.dificult == 'hard'){
+          this.tiebot()
+        }
       }
   }
   tryAgain(){
@@ -78,25 +100,24 @@ export class HomePage {
   }
 
   checkWinner(){
-    let winnerLines= [
-      [0,1,2],
-      [3,4,5],
-      [6,7,8],
-      [0,4,8],
-      [2,4,6],
-      [0,3,6],
-      [1,4,7],
-      [2,5,8]
-    ];
-    for(let line of winnerLines){
+    for(let line of this.winnerLines){
       if(this.squares[line[0]] == this.squares[line[1]] && this.squares[line[1]] == this.squares[line[2]] && this.squares[line[0]] !== null){
         this.gameOver = true;
         this.winner = this.squares[line[0]];
+      } else{
+        let found= this.squares.find(e => !e);
+        let i= this.squares.indexOf(found);
+        if(i == -1){
+          console.log('empate');
+          this.winner= 'empate';
+          this.gameOver= true;
+          break;
+        }
       }
     }
   }
 
-  bot2(){
+  tiebot(){
     if(!this.gameOver){
       if(this.turn == 'player2'){
         if(!this.squares[4]){
@@ -106,30 +127,27 @@ export class HomePage {
                 let rand= corners[Math.floor(Math.random() * corners.length)];
                 this.squares[rand]= 'O'
         } else{
-          let winnerLines= [
-            [0,1,2],
-            [3,4,5],
-            [6,7,8],
-            [0,4,8],
-            [2,4,6],
-            [0,3,6],
-            [1,4,7],
-            [2,5,8]
-          ];
-          for(let line of winnerLines){
+           var check= false;
+          for(let line of this.winnerLines){
             if(this.squares[line[0]]=='X' && this.squares[line[1]]=='X' && !this.squares[line[2]]){
-              console.log('adentro1')
-              this.squares[line[2]]= 'O'
+              this.squares[line[2]]= 'O';
+              check= true;
+              break;
             } else if(this.squares[line[0]]=='X' && !this.squares[line[1]] && this.squares[line[2]]=='X'){
-              this.squares[line[1]]= 'O'
-              console.log('adentro2')
+              this.squares[line[1]]= 'O';
+              check= true;
+              break;
             } else if(!this.squares[line[0]] && this.squares[line[1]]=='X' && this.squares[line[2]]=='X'){
-              this.squares[line[0]]='O'
-              console.log('adentro3')
-            }
+              this.squares[line[0]]='O';
+              check= true;
+              break;
+            } 
+          }
+          if(!check){
+            this.randomCell();
           }
         }
-      }
+      } 
       this.changeTurn();
       this.checkWinner();
     }
