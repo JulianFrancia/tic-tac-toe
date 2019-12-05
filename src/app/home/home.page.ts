@@ -111,21 +111,21 @@ export class HomePage {
   }
 
   checkWinner(){
+    var check= false;
     for(let line of this.winnerLines){
       if(this.squares[line[0]] == this.squares[line[1]] && this.squares[line[1]] == this.squares[line[2]] && this.squares[line[0]] !== null){
         this.gameOver = true;
+        check= true;
         this.winner = this.squares[line[0]];
         break;
-      } else{
+      } 
+    }
         let found= this.squares.find(e => !e);
         let i= this.squares.indexOf(found);
-        if(i == -1){
+        if(i == -1 && check== false){
           this.winner= 'empate';
           this.gameOver= true;
-          break;
         }
-      }
-    }
   }
 
   tiebot(){
