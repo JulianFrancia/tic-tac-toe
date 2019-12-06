@@ -4,19 +4,20 @@
 
 <ion-content class="master">
   <div class="container">
-  <div  @fade  class="board">
+  <div [@slideInUp]="slideInUp" class="board">
   <div class="square"  *ngFor="let square of squares; let i = index" (click)="move(i)" >
     {{square}}
   </div>
   </div>
   <div style="align-self: baseline;">
-      <div>
+      <div [@slideInRight]="slideInRight" class="dificult">
           <ion-button [disabled]="isEnabled" class="ion-button" (click)="selectDificult('easy')">Facil</ion-button>
+          <ion-button [disabled]="isEnabled" class="ion-button" (click)="selectDificult('normal')">Normal</ion-button>
           <ion-button [disabled]="isEnabled" class="ion-button" (click)="selectDificult('hard')">Dificil</ion-button>
           <ion-button [disabled]="isEnabled" class="ion-button" (click)="selectDificult('two')">2 jugadores</ion-button>
       </div>
-      <p @fade style="align-self: baseline; justify-self: center; color: white;" *ngIf="gameOver">El ganador es:{{winner}}</p>
-      <ion-button @fade  class="ion-button" *ngIf="gameOver"  (click)="tryAgain()">Jugar de nuevo?</ion-button> 
+      <p [@rubberBand]="rubberBand"  style="align-self: baseline; justify-self: center; color: white;" *ngIf="gameOver">El ganador es:{{winner}}</p>
+      <ion-button [@rubberBand]="rubberBand" class="ion-button" *ngIf="gameOver"  (click)="tryAgain()">Jugar de nuevo</ion-button> 
 </div>  
 </div>
 </ion-content>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import {trigger, style, animate, transition} from '@angular/animations';
+import {trigger, transition, useAnimation } from '@angular/animations';
+import { rubberBand, slideInUp, slideInRight } from 'ng-animate';
 
 
 @Component({
@@ -7,12 +8,9 @@ import {trigger, style, animate, transition} from '@angular/animations';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   animations: [
-    trigger('fade', [ 
-      transition('void => *', [
-        style({ opacity: 0 }), 
-        animate(2000, style({opacity: 1}))
-      ]) 
-    ])
+    trigger('rubberBand', [transition('* => *', useAnimation(rubberBand))]),
+    trigger('slideInUp', [transition('* => *', useAnimation(slideInUp))]),
+    trigger('slideInRight', [transition('* => *', useAnimation(slideInRight))])
   ]
 })
 export class HomePage {
@@ -23,8 +21,10 @@ export class HomePage {
   public turn: string;
   public winner: string;
   public winnerLines;
-  public cellColor: string;
   public isEnabled: boolean;
+  rubberBand: any;
+  slideInUp: any;
+  slideInRight: any;
 
   constructor() {
     this.initGame();
@@ -91,11 +91,14 @@ export class HomePage {
             this.checkWinner();
           }
         }
-         if(this.dificult=='easy'){
+         if(this.dificult== 'easy'){
             this.bot();
+        }
+        else if(this.dificult== 'normal'){
+          this.mediumbot();
         } 
         else if(this.dificult == 'hard'){
-          this.tiebot();
+          this.hardbot();
         }
          else if(this.dificult == 'two'){
           if(!this.squares[pos]){
@@ -134,39 +137,86 @@ export class HomePage {
         }
   }
 
-  tiebot(){
+tryTie(){
+  var check= false;
+  for(let line of this.winnerLines){
+    if(this.squares[line[0]]=='X' && this.squares[line[1]]=='X' && !this.squares[line[2]]){
+      this.squares[line[2]]= 'O';
+      check= true;
+      break;
+    } else if(this.squares[line[0]]=='X' && !this.squares[line[1]] && this.squares[line[2]]=='X'){
+      this.squares[line[1]]= 'O';
+      check= true;
+      break;
+    } else if(!this.squares[line[0]] && this.squares[line[1]]=='X' && this.squares[line[2]]=='X'){
+      this.squares[line[0]]='O';
+      check= true;
+      break;
+    } 
+  }
+  if(!check){
+    this.randomCell();
+  }
+}
+
+
+firstMove(){
+  if(!this.squares[4]){
+    this.squares[4]= 'O'
+  } else if(!this.squares[0] && !this.squares[2] && !this.squares[6] && !this.squares[8]){
+          let corners= [0, 2, 6, 8];
+          let rand= corners[Math.floor(Math.random() * corners.length)];
+          this.squares[rand]= 'O'
+  }
+}
+
+  mediumbot(){
     if(!this.gameOver){
       if(this.turn == 'player2'){
-        if(!this.squares[4]){
-          this.squares[4]= 'O'
-        } else if(!this.squares[0] && !this.squares[2] && !this.squares[6] && !this.squares[8]){
-                let corners= [0, 2, 6, 8];
-                let rand= corners[Math.floor(Math.random() * corners.length)];
-                this.squares[rand]= 'O'
-        } else{
-           var check= false;
-          for(let line of this.winnerLines){
-            if(this.squares[line[0]]=='X' && this.squares[line[1]]=='X' && !this.squares[line[2]]){
-              this.squares[line[2]]= 'O';
-              check= true;
-              break;
-            } else if(this.squares[line[0]]=='X' && !this.squares[line[1]] && this.squares[line[2]]=='X'){
-              this.squares[line[1]]= 'O';
-              check= true;
-              break;
-            } else if(!this.squares[line[0]] && this.squares[line[1]]=='X' && this.squares[line[2]]=='X'){
-              this.squares[line[0]]='O';
-              check= true;
-              break;
-            } 
-          }
-          if(!check){
-            this.randomCell();
-          }
+        let found= this.squares.find(e => e=='O');
+        if(!found){
+          this.firstMove();
+        }else{
+          this.tryTie();
         }
+        this.changeTurn();
+        this.checkWinner();
       } 
-      this.changeTurn();
-      this.checkWinner();
+    }
+  }
+
+  hardbot(){
+    if(!this.gameOver){
+      if(this.turn == 'player2'){
+        let found= this.squares.find(e => e=='O');
+        if(!found){
+          this.firstMove();
+        } else{
+          var check= false;
+            for(let line of this.winnerLines){
+              if(this.squares[line[0]]=='O' && this.squares[line[1]]=='O' && !this.squares[line[2]]){
+                this.squares[line[2]]= 'O';
+                check= true;
+                break;
+              }
+              else if(this.squares[line[0]]=='O' && !this.squares[line[1]] && this.squares[line[2]]=='O'){
+                this.squares[line[1]]= 'O';
+                check= true;
+                break;
+              }
+              else if(!this.squares[line[0]] && this.squares[line[1]]=='O' && this.squares[line[2]]=='O'){
+                this.squares[line[0]]= 'O';
+                check= true;
+                break;
+              }
+            }
+            if(!check){
+              this.tryTie()
+            }        
+        }
+        this.changeTurn();
+        this.checkWinner();
+      } 
     }
   }
 }

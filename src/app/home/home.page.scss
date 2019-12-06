@@ -12,14 +12,10 @@ ion-content{
 }
 .board{
     display: grid;
-    width: 75%;
-    height: 62%;
+    width: 80%;
+    height: 75%;
     background: #34495e;
-    /*
-    background: rgb(34,193,195);
-    background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
-    */
-    border: 8px solid #2c3e50;
+    border: 6px solid #2c3e50;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
     margin-right: auto;
@@ -37,10 +33,16 @@ ion-content{
     border: 6px solid #2c3e50;
     font-family: Helvetica;
     font-weight: bold;
-    font-size: 2em;    
+    font-size: 2em;
+    color:white;    
 }
 .ion-button{
     cursor: pointer;
+}
+.dificult{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
 }
 
 @media (min-width: 1000px){
