@@ -6,6 +6,7 @@ ion-content{
     width: 100%;
     height: 100%;
     display: grid;
+    justify-items: center;
     align-items: center;
     grid-template-rows: 1fr 1fr;
 }
@@ -36,22 +37,8 @@ ion-content{
     border: 6px solid #2c3e50;
     font-family: Helvetica;
     font-weight: bold;
-    font-size: 2em;
-    
+    font-size: 2em;    
 }
-.square:focus{
-    animation-duration: 3s;
-    animation-name: colorin;
-}
-@keyframes colorin{
-    from{
-    background: green;
-    }
-    to{
-        background: red;
-    }
-}
-
 .ion-button{
     cursor: pointer;
 }

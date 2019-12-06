@@ -24,6 +24,7 @@ export class HomePage {
   public winner: string;
   public winnerLines;
   public cellColor: string;
+  public isEnabled: boolean;
 
   constructor() {
     this.initGame();
@@ -44,6 +45,7 @@ export class HomePage {
     this.dificult = '';
     this.gameOver= false;
     this.turn = 'player1';
+    this.isEnabled= false;
   }
   randomCell(){
     let rand = this.random[Math.floor(Math.random() * this.random.length)];
@@ -67,6 +69,7 @@ export class HomePage {
 
   selectDificult(dificult){
     this.dificult= dificult;
+    this.isEnabled= true;
   }
 
   bot(){
@@ -80,7 +83,7 @@ export class HomePage {
   }
   
   move(pos){
-      if(!this.gameOver){
+      if(!this.gameOver && this.dificult!== ''){
         if(this.turn == 'player1'){
           if(!this.squares[pos]){
             this.squares.splice(pos,1,'X');
@@ -108,6 +111,7 @@ export class HomePage {
     this.squares= Array(9).fill(null);
     this.gameOver= false;
     this.turn = 'player1';
+    this.isEnabled= false;
   }
 
   checkWinner(){
@@ -115,6 +119,7 @@ export class HomePage {
     for(let line of this.winnerLines){
       if(this.squares[line[0]] == this.squares[line[1]] && this.squares[line[1]] == this.squares[line[2]] && this.squares[line[0]] !== null){
         this.gameOver = true;
+        this.dificult= '';
         check= true;
         this.winner = this.squares[line[0]];
         break;
@@ -125,6 +130,7 @@ export class HomePage {
         if(i == -1 && check== false){
           this.winner= 'empate';
           this.gameOver= true;
+          this.dificult= '';
         }
   }
 
