@@ -22,6 +22,8 @@ export class HomePage {
   public winner: string;
   public winnerLines;
   public isEnabled: boolean;
+  public symbol1: string;
+  public symbol2: string;
   rubberBand: any;
   slideInUp: any;
   slideInRight: any;
@@ -50,12 +52,12 @@ export class HomePage {
   randomCell(){
     let rand = this.random[Math.floor(Math.random() * this.random.length)];
         if(!this.squares[rand]){
-          this.squares.splice(rand,1,'O');
+          this.squares.splice(rand,1,this.symbol2);
           this.random.splice(rand,1);
         } else{
           let found= this.squares.find(element => element == null);
           rand= this.squares.indexOf(found);
-          this.squares[rand]='O';
+          this.squares[rand]=this.symbol2;
         }
   }
 
@@ -70,6 +72,15 @@ export class HomePage {
   selectDificult(dificult){
     this.dificult= dificult;
     this.isEnabled= true;
+  }
+  selecSymbol(symbol){
+    if(symbol == 'X'){
+      this.symbol1 = 'X';
+      this.symbol2= 'O';
+    } else {
+      this.symbol1= 'O';
+      this.symbol2= 'X';
+    }
   }
 
   bot(){
@@ -86,7 +97,7 @@ export class HomePage {
       if(!this.gameOver && this.dificult!== ''){
         if(this.turn == 'player1'){
           if(!this.squares[pos]){
-            this.squares.splice(pos,1,'X');
+            this.squares.splice(pos,1,this.symbol1);
             this.changeTurn();
             this.checkWinner();
           }
@@ -102,7 +113,7 @@ export class HomePage {
         }
          else if(this.dificult == 'two'){
           if(!this.squares[pos]){
-            this.squares.splice(pos,1,'O')
+            this.squares.splice(pos,1,this.symbol2)
             this.changeTurn();
             this.checkWinner();
           }
@@ -140,16 +151,16 @@ export class HomePage {
 tryTie(){
   var check= false;
   for(let line of this.winnerLines){
-    if(this.squares[line[0]]=='X' && this.squares[line[1]]=='X' && !this.squares[line[2]]){
-      this.squares[line[2]]= 'O';
+    if(this.squares[line[0]]==this.symbol1 && this.squares[line[1]]==this.symbol1 && !this.squares[line[2]]){
+      this.squares[line[2]]= this.symbol2;
       check= true;
       break;
-    } else if(this.squares[line[0]]=='X' && !this.squares[line[1]] && this.squares[line[2]]=='X'){
-      this.squares[line[1]]= 'O';
+    } else if(this.squares[line[0]]==this.symbol1 && !this.squares[line[1]] && this.squares[line[2]]==this.symbol1){
+      this.squares[line[1]]= this.symbol2;
       check= true;
       break;
-    } else if(!this.squares[line[0]] && this.squares[line[1]]=='X' && this.squares[line[2]]=='X'){
-      this.squares[line[0]]='O';
+    } else if(!this.squares[line[0]] && this.squares[line[1]]==this.symbol1 && this.squares[line[2]]==this.symbol1){
+      this.squares[line[0]]=this.symbol2;
       check= true;
       break;
     } 
@@ -162,18 +173,18 @@ tryTie(){
 
 firstMove(){
   if(!this.squares[4]){
-    this.squares[4]= 'O'
+    this.squares[4]= this.symbol2
   } else if(!this.squares[0] && !this.squares[2] && !this.squares[6] && !this.squares[8]){
           let corners= [0, 2, 6, 8];
           let rand= corners[Math.floor(Math.random() * corners.length)];
-          this.squares[rand]= 'O'
+          this.squares[rand]= this.symbol2
   }
 }
 
   mediumbot(){
     if(!this.gameOver){
       if(this.turn == 'player2'){
-        let found= this.squares.find(e => e=='O');
+        let found= this.squares.find(e => e==this.symbol2);
         if(!found){
           this.firstMove();
         }else{
@@ -188,24 +199,24 @@ firstMove(){
   hardbot(){
     if(!this.gameOver){
       if(this.turn == 'player2'){
-        let found= this.squares.find(e => e=='O');
+        let found= this.squares.find(e => e==this.symbol2);
         if(!found){
           this.firstMove();
         } else{
           var check= false;
             for(let line of this.winnerLines){
-              if(this.squares[line[0]]=='O' && this.squares[line[1]]=='O' && !this.squares[line[2]]){
-                this.squares[line[2]]= 'O';
+              if(this.squares[line[0]]==this.symbol2 && this.squares[line[1]]==this.symbol2 && !this.squares[line[2]]){
+                this.squares[line[2]]= this.symbol2;
                 check= true;
                 break;
               }
-              else if(this.squares[line[0]]=='O' && !this.squares[line[1]] && this.squares[line[2]]=='O'){
-                this.squares[line[1]]= 'O';
+              else if(this.squares[line[0]]==this.symbol2 && !this.squares[line[1]] && this.squares[line[2]]==this.symbol2){
+                this.squares[line[1]]= this.symbol2;
                 check= true;
                 break;
               }
-              else if(!this.squares[line[0]] && this.squares[line[1]]=='O' && this.squares[line[2]]=='O'){
-                this.squares[line[0]]= 'O';
+              else if(!this.squares[line[0]] && this.squares[line[1]]==this.symbol2 && this.squares[line[2]]==this.symbol2){
+                this.squares[line[0]]= this.symbol2;
                 check= true;
                 break;
               }
