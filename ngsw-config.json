@@ -3,11 +3,11 @@
   "index": "/index.html",
   "assetGroups": [
     {
-      "name": "tic-tac-toe",
+      "name": "TicTacToe",
       "installMode": "prefetch",
       "resources": {
         "files": [
-          "/favicon.ico",
+          "/tic-tac-toe.png",
           "/index.html",
           "/*.css",
           "/*.js"

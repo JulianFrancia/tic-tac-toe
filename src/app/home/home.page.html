@@ -11,15 +11,20 @@
   </div>
   <div style="align-self: baseline;">
       <div [@slideInRight]="slideInRight" class="dificult">
-          <ion-button [disabled]="isEnabled" class="ion-button" (click)="selectDificult('easy')">Facil</ion-button>
-          <ion-button [disabled]="isEnabled" class="ion-button" (click)="selectDificult('normal')">Normal</ion-button>
-          <ion-button [disabled]="isEnabled" class="ion-button" (click)="selectDificult('hard')">Dificil</ion-button>
-          <ion-button [disabled]="isEnabled" class="ion-button" (click)="selectDificult('two')">2 jugadores</ion-button>
-          <ion-button (click)="selecSymbol('X')">X</ion-button>
-          <ion-button (click)="selecSymbol('O')">O</ion-button>
+          <p style="color: white">Elegir dificultad:</p> <br>
+          <ion-button [disabled]="easy" class="ion-button" (click)="selectDificult('easy')">Re facil</ion-button>
+          <ion-button [disabled]="normal" class="ion-button" (click)="selectDificult('normal')">Pasable</ion-button>
+          <ion-button [disabled]="hard" class="ion-button" (click)="selectDificult('hard')">Dificil pero no tan</ion-button>
+          <ion-button [disabled]="two" class="ion-button" (click)="selectDificult('two')">2 jugadores</ion-button>
+          <p class="text">Elegir simbolo:</p> <br>
+          <ion-button [disabled]="colorX"  (click)="selecSymbol('X')">X</ion-button>
+          <ion-button [disabled]="colorO"  (click)="selecSymbol('O')">O</ion-button>
       </div>
-      <p [@rubberBand]="rubberBand"  style="align-self: baseline; justify-self: center; color: white;" *ngIf="gameOver">El ganador es:{{winner}}</p>
-      <ion-button [@rubberBand]="rubberBand" class="ion-button" *ngIf="gameOver"  (click)="tryAgain()">Jugar de nuevo</ion-button> 
+      <div>
+        <p [@rubberBand]="rubberBand"  style="align-self: baseline; justify-self: center; color: white; margin-top: 1%;" *ngIf="gameOver && winner !== 'empate'">El ganador es: {{winner}}</p>
+        <p [@rubberBand]="rubberBand"  style="align-self: baseline; justify-self: center; color: white;" *ngIf="gameOver && winner == 'empate'">{{winner}}</p>
+        <ion-button [@rubberBand]="rubberBand" class="ion-button" *ngIf="gameOver"  (click)="tryAgain()">Jugar de nuevo</ion-button>
+      </div>   
 </div>  
 </div>
 </ion-content>

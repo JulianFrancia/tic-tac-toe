@@ -21,9 +21,14 @@ export class HomePage {
   public turn: string;
   public winner: string;
   public winnerLines;
-  public isEnabled: boolean;
   public symbol1: string;
   public symbol2: string;
+  public easy: boolean;
+  public normal: boolean;
+  public hard: boolean;
+  public two: boolean;
+  public colorX: boolean;
+  public colorO: boolean;
   rubberBand: any;
   slideInUp: any;
   slideInRight: any;
@@ -45,9 +50,15 @@ export class HomePage {
     this.squares= Array(9).fill(null);
     this.random=[0,1,2,3,4,5,6,7,8];
     this.dificult = '';
+    this.symbol1= '';
     this.gameOver= false;
     this.turn = 'player1';
-    this.isEnabled= false;
+    this.easy= false;
+    this.normal= false;
+    this.hard= false;
+    this.two= false;
+    this.colorX= false;
+    this.colorO= false;
   }
   randomCell(){
     let rand = this.random[Math.floor(Math.random() * this.random.length)];
@@ -71,15 +82,46 @@ export class HomePage {
 
   selectDificult(dificult){
     this.dificult= dificult;
-    this.isEnabled= true;
+    switch(dificult){
+      case 'easy':
+              this.easy=false;
+              this.normal= true;
+              this.hard= true;
+              this.two= true;
+              break;
+      case 'normal':
+          this.easy=true;
+          this.normal= false;
+          this.hard= true;
+          this.two= true;
+          break;
+      case 'hard':
+          this.easy=true;
+          this.normal= true;
+          this.hard= false;
+          this.two= true;
+          break;
+      case 'two':
+          this.easy=true;
+          this.normal= true;
+          this.hard= true;
+          this.two= false;
+          break;                
+    }
   }
   selecSymbol(symbol){
-    if(symbol == 'X'){
-      this.symbol1 = 'X';
-      this.symbol2= 'O';
-    } else {
-      this.symbol1= 'O';
-      this.symbol2= 'X';
+    switch(symbol){
+      case 'X':
+                this.symbol1= 'X';
+                this.symbol2= 'O';
+                this.colorX= false;
+                this.colorO= true;
+                break;
+      case 'O':
+                this.symbol1= 'O';
+                this.symbol2= 'X';
+                this.colorX= true;
+                this.colorO= false;  
     }
   }
 
@@ -94,7 +136,7 @@ export class HomePage {
   }
   
   move(pos){
-      if(!this.gameOver && this.dificult!== ''){
+      if(!this.gameOver && this.dificult!== '' && this.symbol1!== ''){
         if(this.turn == 'player1'){
           if(!this.squares[pos]){
             this.squares.splice(pos,1,this.symbol1);
@@ -122,10 +164,7 @@ export class HomePage {
   }
 
   tryAgain(){
-    this.squares= Array(9).fill(null);
-    this.gameOver= false;
-    this.turn = 'player1';
-    this.isEnabled= false;
+    this.initGame();
   }
 
   checkWinner(){
