@@ -1,17 +1,10 @@
 import { Component } from '@angular/core';
-import {trigger, transition, useAnimation } from '@angular/animations';
-import { rubberBand, slideInUp, slideInRight } from 'ng-animate';
 
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  animations: [
-    trigger('rubberBand', [transition('* => *', useAnimation(rubberBand))]),
-    trigger('slideInUp', [transition('* => *', useAnimation(slideInUp))]),
-    trigger('slideInRight', [transition('* => *', useAnimation(slideInRight))])
-  ]
 })
 export class HomePage {
   public squares: string[];
@@ -29,9 +22,6 @@ export class HomePage {
   public two: boolean;
   public colorX: boolean;
   public colorO: boolean;
-  rubberBand: any;
-  slideInUp: any;
-  slideInRight: any;
 
   constructor() {
     this.initGame();
@@ -172,9 +162,8 @@ export class HomePage {
     for(let line of this.winnerLines){
       if(this.squares[line[0]] == this.squares[line[1]] && this.squares[line[1]] == this.squares[line[2]] && this.squares[line[0]] !== null){
         this.gameOver = true;
-        this.dificult= '';
         check= true;
-        this.winner = this.squares[line[0]];
+        this.winner ='El ganador es '+ this.squares[line[0]];
         break;
       } 
     }
@@ -183,7 +172,6 @@ export class HomePage {
         if(i == -1 && check== false){
           this.winner= 'empate';
           this.gameOver= true;
-          this.dificult= '';
         }
   }
 
