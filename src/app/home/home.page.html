@@ -21,6 +21,7 @@
           <ion-button [disabled]="colorO"  (click)="selecSymbol('O')">O</ion-button>
       </div>
       <div>
+        <h1 class="text" *ngIf="dificult !== '' && symbol1 !== ''">Turno de {{symbol}}</h1>
         <p style="align-self: baseline; justify-self: center; color: white" *ngIf="gameOver">{{winner}}</p>
         <ion-button  class="ion-button" *ngIf="gameOver"  (click)="tryAgain()">Jugar de nuevo</ion-button>
       </div>   

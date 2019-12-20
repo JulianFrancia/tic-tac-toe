@@ -22,6 +22,7 @@ export class HomePage {
   public two: boolean;
   public colorX: boolean;
   public colorO: boolean;
+  public symbol: string;
 
   constructor() {
     this.initGame();
@@ -65,8 +66,10 @@ export class HomePage {
   changeTurn(){
     if(this.turn == 'player1'){
       this.turn= 'player2';
+      this.symbol= this.symbol2;
     } else{
       this.turn= 'player1';
+      this.symbol= this.symbol1;
     }
   }
 
@@ -106,12 +109,14 @@ export class HomePage {
                 this.symbol2= 'O';
                 this.colorX= false;
                 this.colorO= true;
+                this.symbol= this.symbol1;
                 break;
       case 'O':
                 this.symbol1= 'O';
                 this.symbol2= 'X';
                 this.colorX= true;
-                this.colorO= false;  
+                this.colorO= false;
+                  
     }
   }
 
@@ -135,13 +140,19 @@ export class HomePage {
           }
         }
          if(this.dificult== 'easy'){
+           setTimeout(()=>{
             this.bot();
+           },1200)
         }
         else if(this.dificult== 'normal'){
-          this.mediumbot();
+          setTimeout(()=>{
+            this.mediumbot();
+          },1200);
         } 
         else if(this.dificult == 'hard'){
-          this.hardbot();
+          setTimeout(()=>{
+            this.hardbot();
+          },1200);
         }
          else if(this.dificult == 'two'){
           if(!this.squares[pos]){
