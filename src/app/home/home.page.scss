@@ -10,6 +10,9 @@ ion-content{
     align-items: center;
     grid-template-rows: 1fr 1fr;
 }
+.input{
+    border-bottom: 3px solid black;
+}
 .board{
     display: grid;
     width: 80%;
@@ -41,15 +44,12 @@ ion-content{
 }
 .dificult{
     display:grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
 }
 @media  (max-width: 999px){
     .board{
         align-self: center;
-    }
-    .text{
-        margin-top: 1%;
     }
 }
 
@@ -70,4 +70,5 @@ ion-content{
 }
 .text{
     color: white;
+    text-align: center;
 }

@@ -3,26 +3,29 @@
 </ion-header>
 
 <ion-content class="master">
-  <div class="container">
+  <div class="container">    
   <div *ngIf="dificult !== '' && symbol1 !== ''" class="board">
   <div class="square"  *ngFor="let square of squares; let i = index" (click)="move(i)" >
     {{square}}
   </div>
   </div>
   <div style="align-self: center;">
-      <div *ngIf="dificult == '' || symbol1 == ''"  class="dificult">
-          <p style="color: white">Elegir dificultad:</p> <br>
+      <div *ngIf="start && (dificult =='' || symbol1 == '')  "  class="dificult">
+          <p class="text">Elegir dificultad:</p>
           <ion-button [disabled]="easy" class="ion-button" (click)="selectDificult('easy')">Re facil</ion-button>
           <ion-button [disabled]="normal" class="ion-button" (click)="selectDificult('normal')">Pasable</ion-button>
           <ion-button [disabled]="hard" class="ion-button" (click)="selectDificult('hard')">Dificil pero no tan</ion-button>
-          <ion-button [disabled]="two" class="ion-button" (click)="selectDificult('two')">2 jugadores</ion-button>
-          <p class="text">Elegir simbolo:</p> <br>
+          <p class="text">Elegir simbolo:</p>
           <ion-button [disabled]="colorX"  (click)="selecSymbol('X')">X</ion-button>
           <ion-button [disabled]="colorO"  (click)="selecSymbol('O')">O</ion-button>
       </div>
       <div>
+        <div *ngIf="!start">   
+          <ion-input [formControl]="name" type="text" class="input" placeholder="Nombre" require= "true"></ion-input>
+          <ion-button [disabled]="!name.valid" (click)="startGame(name.value)">Empezar</ion-button>
+           </div>
         <h1 class="text" *ngIf="dificult !== '' && symbol1 !== ''">Turno de {{symbol}}</h1>
-        <p style="align-self: baseline; justify-self: center; color: white" *ngIf="gameOver">{{winner}}</p>
+        <p style="align-self: baseline; justify-self: center; color: white" *ngIf="gameOver">{{message}}</p>
         <ion-button  class="ion-button" *ngIf="gameOver"  (click)="tryAgain()">Jugar de nuevo</ion-button>
       </div>   
 </div>  

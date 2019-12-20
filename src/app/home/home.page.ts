@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { FormControl, Validator, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -19,10 +19,14 @@ export class HomePage {
   public easy: boolean;
   public normal: boolean;
   public hard: boolean;
-  public two: boolean;
   public colorX: boolean;
   public colorO: boolean;
   public symbol: string;
+  public start: boolean= false;
+  public username: string= '';
+  public message: string;
+
+  name = new FormControl('', Validators.required);
 
   constructor() {
     this.initGame();
@@ -47,9 +51,12 @@ export class HomePage {
     this.easy= false;
     this.normal= false;
     this.hard= false;
-    this.two= false;
     this.colorX= false;
     this.colorO= false;
+  }
+  startGame(name){
+    this.start= true;
+    this.username= name;
   }
   randomCell(){
     let rand = this.random[Math.floor(Math.random() * this.random.length)];
@@ -80,26 +87,17 @@ export class HomePage {
               this.easy=false;
               this.normal= true;
               this.hard= true;
-              this.two= true;
               break;
       case 'normal':
           this.easy=true;
           this.normal= false;
           this.hard= true;
-          this.two= true;
           break;
       case 'hard':
           this.easy=true;
           this.normal= true;
           this.hard= false;
-          this.two= true;
-          break;
-      case 'two':
-          this.easy=true;
-          this.normal= true;
-          this.hard= true;
-          this.two= false;
-          break;                
+          break;               
     }
   }
   selecSymbol(symbol){
@@ -116,7 +114,20 @@ export class HomePage {
                 this.symbol2= 'X';
                 this.colorX= true;
                 this.colorO= false;
-                  
+                this.symbol= this.symbol1;  
+    }
+  }
+
+  messageFinal(){
+    switch(this.winner){
+      case this.symbol1:
+        this.message= 'perdi, ganaste'+this.username;
+        break;
+      case this.symbol2:
+        this.message= 'gane'+this.username;
+        break;
+      case 'empate':
+        this.message= 'empatamos'+this.username;  
     }
   }
 
@@ -154,13 +165,6 @@ export class HomePage {
             this.hardbot();
           },1200);
         }
-         else if(this.dificult == 'two'){
-          if(!this.squares[pos]){
-            this.squares.splice(pos,1,this.symbol2)
-            this.changeTurn();
-            this.checkWinner();
-          }
-        }
       }
   }
 
@@ -174,14 +178,16 @@ export class HomePage {
       if(this.squares[line[0]] == this.squares[line[1]] && this.squares[line[1]] == this.squares[line[2]] && this.squares[line[0]] !== null){
         this.gameOver = true;
         check= true;
-        this.winner ='El ganador es '+ this.squares[line[0]];
+        this.winner =this.squares[line[0]];
+        this.messageFinal();
         break;
       } 
     }
         let found= this.squares.find(e => !e);
         let i= this.squares.indexOf(found);
         if(i == -1 && check== false){
-          this.winner= 'empate';
+          this.winner= 'empatamos';
+          this.messageFinal();
           this.gameOver= true;
         }
   }
